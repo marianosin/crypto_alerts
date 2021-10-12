@@ -28,25 +28,26 @@ for pair in pairs.market_pair:
 
 
     # Calcula los indicadores de interés
-    df = pd.DataFrame(ohlc_btcusdt, columns = ['Time', 'Open', 'High', 'Low', 'Close', 'Volume'])
-    df['Time'] = [datetime.fromtimestamp(float(time)/1000) for time in df['Time']]
-    df.set_index('Time', inplace=True)
+    df = pd.DataFrame(ohlc_btcusdt, columns = ['date_c', 'open_c', 'high_c', 'low_c', 'close_c', 'volume_c'])
+    # df['Time'] = [datetime.fromtimestamp(float(time)/1000) for time in df['Time']]
+    df['date_c'] = [(float(time)/1) for time in df['date_c']]
+    df.set_index('date_c', inplace=True)
     df['coin_pair'] = pair
-    ema10 = ta.ema(df["Close"], length=10)
+    ema10 = ta.ema(df["close_c"], length=10)
     df['ema_10'] = ema10
-    ema10 = ta.ema(df["Close"], length=10)
+    ema10 = ta.ema(df["close_c"], length=10)
     df['ema_10'] = ema10
-    ema20 = ta.ema(df["Close"], length=20)
+    ema20 = ta.ema(df["close_c"], length=20)
     df['ema_20'] = ema20
-    ema50 = ta.ema(df["Close"], length=50)
+    ema50 = ta.ema(df["close_c"], length=50)
     df['ema_50'] = ema50
-    ema200 = ta.ema(df["Close"], length=200)
+    ema200 = ta.ema(df["close_c"], length=200)
     df['ema_200'] = ema200
-    rsi14 = ta.rsi(df["Close"], length=14)
+    rsi14 = ta.rsi(df["close_c"], length=14)
     df['rsi_14'] = rsi14
-    df['lower_band'] = ta.bbands(df['Close'])["BBL_5_2.0"]
-    df['upper_band'] = ta.bbands(df['Close'])["BBU_5_2.0"]
-    df['mid_band'] = ta.bbands(df['Close'])["BBM_5_2.0"]
+    df['lower_band'] = ta.bbands(df['close_c'])["BBL_5_2.0"]
+    df['upper_band'] = ta.bbands(df['close_c'])["BBU_5_2.0"]
+    df['mid_band'] = ta.bbands(df['close_c'])["BBM_5_2.0"]
 
     
     df.to_sql('crypto_prices',con=engine , if_exists='append', index=True)
