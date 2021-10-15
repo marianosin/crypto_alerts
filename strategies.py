@@ -78,17 +78,7 @@ class BOLLRSIStrat(bt.Strategy):
 class BOLLStrat(bt.Strategy):
      
     '''
-    This is a simple mean reversion bollinger band strategy.
- 
-    Entry Critria:
-        - Long:
-            - Price closes below the lower band
-            - Stop Order entry when price crosses back above the lower band
-        - Short:
-            - Price closes above the upper band
-            - Stop order entry when price crosses back below the upper band
-    Exit Critria
-        - Long/Short: Price touching the median line
+    Estrategia con Bollinger bands
     '''
 
     params = (
@@ -165,7 +155,8 @@ class smaCross(bt.SignalStrategy):
         crossover = bt.ind.CrossOver(price, sma)
         self.signal_add(bt.SIGNAL_LONG, crossover)
 
-class emasCross(bt.SignalStrategy):
+class smasCross(bt.SignalStrategy):
+    """Estrategias con cruce de medias móviles"""
     def __init__(self):
         ema1 =  bt.ind.SMA(period=8)
         ema2 = bt.ind.SMA(period=50)
@@ -173,6 +164,11 @@ class emasCross(bt.SignalStrategy):
         crossover = bt.ind.CrossOver(ema1, ema2)
         self.signal_add(bt.SIGNAL_LONG, crossover)
 class emaPriceCross(bt.SignalStrategy):
+    """Estrategia con ema y precio
+
+    Args:
+        bt ([type]): [description]
+    """
     def __init__(self):
         ema1 =  bt.ind.SMA(period=50)
         price = self.data
@@ -185,7 +181,11 @@ class emaPriceCross(bt.SignalStrategy):
 
 
 class RSIStrategy(bt.Strategy):
-    
+    """Estrategia con RSI
+
+    Args:
+        bt ([type]): [description]
+    """
     def __init__(self):
         
         self.rsi = bt.ind.RSI(self.data, period= 14)
