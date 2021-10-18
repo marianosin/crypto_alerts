@@ -1,7 +1,7 @@
 import backtrader as bt
 import yfinance as yf
 from datetime import datetime
-def runstrat(MyStrategy,date = datetime.today().isoformat(), ticker = 'BTC-USD' , cash = 100000):
+def runstrat(MyStrategy,date , ticker = 'BTC-USD' , cash = 100000):
     """Runs the test
 
     Args:

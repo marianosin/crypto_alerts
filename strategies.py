@@ -61,22 +61,22 @@ class BOLLRSIStrat(bt.Strategy):
             print('9: Position Size:                       {}'.format(self.position.size))
             print('--------------------------------------------------------------------')
 
-    def notify_trade(self,trade):
-        if trade.isclosed:
-            dt = self.data.datetime.date()
+    # def notify_trade(self,trade):
+    #     if trade.isclosed:
+    #         dt = self.data.datetime.date()
 
-            print('---------------------------- TRADE ---------------------------------')
-            print("1: Data Name:                            {}".format(trade.data._name))
-            print("2: Bar Num:                              {}".format(len(trade.data)))
-            print("3: Current date:                         {}".format(dt))
-            print('4: Status:                               Trade Complete')
-            print('5: Ref:                                  {}'.format(trade.ref))
-            print('6: PnL:                                  {}'.format(round(trade.pnl,2)))
-            print('--------------------------------------------------------------------')
+    #         print('---------------------------- TRADE ---------------------------------')
+    #         print("1: Data Name:                            {}".format(trade.data._name))
+    #         print("2: Bar Num:                              {}".format(len(trade.data)))
+    #         print("3: Current date:                         {}".format(dt))
+    #         print('4: Status:                               Trade Complete')
+    #         print('5: Ref:                                  {}'.format(trade.ref))
+    #         print('6: PnL:                                  {}'.format(round(trade.pnl,2)))
+    #         print('--------------------------------------------------------------------')
 
 
 class BOLLStrat(bt.Strategy):
-     
+
     '''
     Estrategia con Bollinger bands
     '''
@@ -132,18 +132,18 @@ class BOLLStrat(bt.Strategy):
             print('9: Position Size:                       {}'.format(self.position.size))
             print('--------------------------------------------------------------------')
 
-    def notify_trade(self,trade):
-        if trade.isclosed:
-            dt = self.data.datetime.date()
+    # def notify_trade(self,trade):
+    #     if trade.isclosed:
+    #         dt = self.data.datetime.date()
 
-            print('---------------------------- TRADE ---------------------------------')
-            print("1: Data Name:                            {}".format(trade.data._name))
-            print("2: Bar Num:                              {}".format(len(trade.data)))
-            print("3: Current date:                         {}".format(dt))
-            print('4: Status:                               Trade Complete')
-            print('5: Ref:                                  {}'.format(trade.ref))
-            print('6: PnL:                                  {}'.format(round(trade.pnl,2)))
-            print('--------------------------------------------------------------------')
+    #         print('---------------------------- TRADE ---------------------------------')
+    #         print("1: Data Name:                            {}".format(trade.data._name))
+    #         print("2: Bar Num:                              {}".format(len(trade.data)))
+    #         print("3: Current date:                         {}".format(dt))
+    #         print('4: Status:                               Trade Complete')
+    #         print('5: Ref:                                  {}'.format(trade.ref))
+    #         print('6: PnL:                                  {}'.format(round(trade.pnl,2)))
+    #         print('--------------------------------------------------------------------')
 
 
 
@@ -158,8 +158,8 @@ class smaCross(bt.SignalStrategy):
 class smasCross(bt.SignalStrategy):
     """Estrategias con cruce de medias móviles"""
     def __init__(self):
-        ema1 =  bt.ind.SMA(period=8)
-        ema2 = bt.ind.SMA(period=50)
+        ema1 =  bt.ind.SMA(period=20)
+        ema2 = bt.ind.SMA(period=100)
         
         crossover = bt.ind.CrossOver(ema1, ema2)
         self.signal_add(bt.SIGNAL_LONG, crossover)
@@ -170,11 +170,12 @@ class emaPriceCross(bt.SignalStrategy):
         bt ([type]): [description]
     """
     def __init__(self):
-        ema1 =  bt.ind.SMA(period=50)
-        price = self.data
+        
+        self.ema1 =  bt.ind.EMA(period= 100)
+        self.price = self.data
         self.rsi = bt.ind.RSI(self.data, period= 14)
         
-        crossover = bt.ind.CrossOver(price, ema1)
+        crossover = bt.ind.CrossOver(self.price, self.ema1)
         self.signal_add(bt.SIGNAL_LONG, crossover)
 
 
