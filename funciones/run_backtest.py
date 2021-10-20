@@ -1,7 +1,8 @@
 import backtrader as bt
 import yfinance as yf
-from datetime import datetime
-def runstrat(MyStrategy,date , ticker = 'BTC-USD' , cash = 100000):
+from sqlalchemy import create_engine
+import os
+def runstrat(MyStrategy, strategy_name,date , engine,  ticker = 'BTC-USD' , cash = 100000):
     """Runs the test
 
     Args:
@@ -32,10 +33,12 @@ def runstrat(MyStrategy,date , ticker = 'BTC-USD' , cash = 100000):
     cerebro.addstrategy(MyStrategy)
     cerebro.run()
     end_value = cerebro.broker.getvalue()
-    return_pct = end_value/init_value-1
+    return_pct = (end_value/init_value-1)*100
     
     print("Se comenzó con: ", init_value)
     print("Se terminó con: ",end_value)
-    print("El retorno fue: ", return_pct*100,"%")
+    print("El retorno fue: ", return_pct,"%")
     #cerebro.plot()
+    engine.execute(f"""insert into crypto_strategy_results (market,strategy_name, anual_return)
+                                        values('{ticker}','{strategy_name}', {return_pct}) """)
     return cerebro

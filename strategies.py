@@ -21,6 +21,7 @@ class BOLLRSIStrat(bt.Strategy):
         self.rsi = bt.ind.RSI(self.data, period= 14)
         #self.sx = bt.indicators.CrossDown(self.data.close, self.boll.lines.top)
         #self.lx = bt.indicators.CrossUp(self.data.close, self.boll.lines.bot)
+        self.str_name = "BOLLRSI"
 
     def next(self):
 
@@ -92,7 +93,7 @@ class BOLLStrat(bt.Strategy):
         self.boll = bt.indicators.BollingerBands(period=self.p.period, devfactor=self.p.devfactor)
         #self.sx = bt.indicators.CrossDown(self.data.close, self.boll.lines.top)
         #self.lx = bt.indicators.CrossUp(self.data.close, self.boll.lines.bot)
-
+        self.str_name = "BOLL"
     def next(self):
 
         orders = self.broker.get_orders_open()
@@ -154,13 +155,14 @@ class smaCross(bt.SignalStrategy):
         price = self.data
         crossover = bt.ind.CrossOver(price, sma)
         self.signal_add(bt.SIGNAL_LONG, crossover)
+        self.str_name = "SMACross"
 
 class smasCross(bt.SignalStrategy):
     """Estrategias con cruce de medias móviles"""
     def __init__(self):
         ema1 =  bt.ind.SMA(period=20)
         ema2 = bt.ind.SMA(period=100)
-        
+        self.str_name = "SMAsCross"
         crossover = bt.ind.CrossOver(ema1, ema2)
         self.signal_add(bt.SIGNAL_LONG, crossover)
 class emaPriceCross(bt.SignalStrategy):
@@ -174,7 +176,7 @@ class emaPriceCross(bt.SignalStrategy):
         self.ema1 =  bt.ind.EMA(period= 100)
         self.price = self.data
         self.rsi = bt.ind.RSI(self.data, period= 14)
-        
+        self.str_name = "EMACross"
         crossover = bt.ind.CrossOver(self.price, self.ema1)
         self.signal_add(bt.SIGNAL_LONG, crossover)
 
@@ -190,7 +192,7 @@ class RSIStrategy(bt.Strategy):
     def __init__(self):
         
         self.rsi = bt.ind.RSI(self.data, period= 14)
-        
+        self.str_name = "RSI"
     def next(self):
         if self.rsi < 30 and not self.position:
             self.buy(size=1)
