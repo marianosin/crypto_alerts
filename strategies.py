@@ -21,7 +21,7 @@ class BOLLRSIStrat(bt.Strategy):
         self.rsi = bt.ind.RSI(self.data, period= 14)
         #self.sx = bt.indicators.CrossDown(self.data.close, self.boll.lines.top)
         #self.lx = bt.indicators.CrossUp(self.data.close, self.boll.lines.bot)
-        self.str_name = "BOLLRSI"
+        self.strategy_name = 'BOLLRSI'
 
     def next(self):
 
@@ -33,7 +33,7 @@ class BOLLRSIStrat(bt.Strategy):
                 self.broker.cancel(order)
 
         if not self.position:
-
+            
             if (self.data.close > self.boll.lines.top) or (self.rsi>70):
 
                 self.sell(exectype=bt.Order.Stop, price=self.boll.lines.top[0], size=self.p.size)
@@ -165,7 +165,7 @@ class smasCross(bt.SignalStrategy):
         self.str_name = "SMAsCross"
         crossover = bt.ind.CrossOver(ema1, ema2)
         self.signal_add(bt.SIGNAL_LONG, crossover)
-class emaPriceCross(bt.SignalStrategy):
+class emaPriceCross_100(bt.SignalStrategy):
     """Estrategia con ema y precio
 
     Args:
@@ -181,6 +181,35 @@ class emaPriceCross(bt.SignalStrategy):
         self.signal_add(bt.SIGNAL_LONG, crossover)
 
 
+class emaPriceCross_200(bt.SignalStrategy):
+    """Estrategia con ema y precio
+
+    Args:
+        bt ([type]): [description]
+    """
+    def __init__(self):
+        
+        self.ema1 =  bt.ind.EMA(period= 200)
+        self.price = self.data
+        self.rsi = bt.ind.RSI(self.data, period= 14)
+        self.str_name = "EMACross"
+        crossover = bt.ind.CrossOver(self.price, self.ema1)
+        self.signal_add(bt.SIGNAL_LONG, crossover)
+
+class emaPriceCross_150(bt.SignalStrategy):
+    """Estrategia con ema y precio
+
+    Args:
+        bt ([type]): [description]
+    """
+    def __init__(self):
+        
+        self.ema1 =  bt.ind.EMA(period= 150)
+        self.price = self.data
+        self.rsi = bt.ind.RSI(self.data, period= 14)
+        self.str_name = "EMACross"
+        crossover = bt.ind.CrossOver(self.price, self.ema1)
+        self.signal_add(bt.SIGNAL_LONG, crossover)
 
 
 class RSIStrategy(bt.Strategy):

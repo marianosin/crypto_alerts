@@ -3,7 +3,6 @@ import strategies
 from funciones.run_backtest import runstrat
 from funciones.save_backtrader_plot import saveplots
 
-strat = [strategies.RSIStrategy,strategies.BOLLStrat, strategies.BOLLRSIStrat, strategies.emaPriceCross, strategies.smasCross, strategies.smaCross]
 stname = ["RSI","BOLL", "BOLLRSI","EMACROSS","SMAsCROSS", "SMACROSS"]
 markets = ["BTC-USD", "ADA-USD","ETH-USD", "LTC-USD", "BNB-USD"]
 
