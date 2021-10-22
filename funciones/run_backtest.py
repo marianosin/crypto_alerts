@@ -2,7 +2,7 @@ import backtrader as bt
 import yfinance as yf
 from sqlalchemy import create_engine
 import os
-def runstrat(MyStrategy, strategy_name,date , engine,  ticker = 'BTC-USD' , cash = 100000):
+def runstrat(MyStrategy, strategy_name,date , engine,  ticker = 'BTC-USD' , cash = 100000, periodo = 1):
     """Runs the test
 
     Args:
@@ -14,7 +14,7 @@ def runstrat(MyStrategy, strategy_name,date , engine,  ticker = 'BTC-USD' , cash
     Returns:
         Returns cerebro with all its components
     """
-    yyyy, mm, dd = int(date[:4])-1, int(date[5:7]),int(date[-2:])
+    yyyy, mm, dd = int(date[:4])-periodo, int(date[5:7]),int(date[-2:])
     start = f'{yyyy}-{mm}-{dd}'
     
     df = yf.download(ticker,start, date)

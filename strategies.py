@@ -1,10 +1,14 @@
+"""
+Almacen de estrategias para hacer trades a través de indicadores técnicos. 
+"""
+
 import backtrader as bt
 import datetime
 
 
 
 class BOLLRSIStrat(bt.Strategy):
-     
+
     '''
     Combina Bollinger y RSI
     '''
@@ -149,7 +153,13 @@ class BOLLStrat(bt.Strategy):
 
 
 
-class smaCross(bt.SignalStrategy):
+class smaCross_50(bt.SignalStrategy):
+    """Cruce de medias simple con precio. sma 50
+
+    Args:
+        bt ([type]): [description]
+    """
+    
     def __init__(self):
         sma =  bt.ind.SMA(period=50)
         price = self.data
@@ -157,8 +167,8 @@ class smaCross(bt.SignalStrategy):
         self.signal_add(bt.SIGNAL_LONG, crossover)
         self.str_name = "SMACross"
 
-class smasCross(bt.SignalStrategy):
-    """Estrategias con cruce de medias móviles"""
+class smasCross_20_100(bt.SignalStrategy):
+    """Estrategias con cruce de medias móviles. periodos 20 y 100"""
     def __init__(self):
         ema1 =  bt.ind.SMA(period=20)
         ema2 = bt.ind.SMA(period=100)
@@ -166,7 +176,7 @@ class smasCross(bt.SignalStrategy):
         crossover = bt.ind.CrossOver(ema1, ema2)
         self.signal_add(bt.SIGNAL_LONG, crossover)
 class emaPriceCross_100(bt.SignalStrategy):
-    """Estrategia con ema y precio
+    """Estrategia con ema y precio, ema 100
 
     Args:
         bt ([type]): [description]
@@ -182,7 +192,7 @@ class emaPriceCross_100(bt.SignalStrategy):
 
 
 class emaPriceCross_200(bt.SignalStrategy):
-    """Estrategia con ema y precio
+    """Estrategia con ema y precio. ema 200
 
     Args:
         bt ([type]): [description]
@@ -197,7 +207,7 @@ class emaPriceCross_200(bt.SignalStrategy):
         self.signal_add(bt.SIGNAL_LONG, crossover)
 
 class emaPriceCross_150(bt.SignalStrategy):
-    """Estrategia con ema y precio
+    """Estrategia con ema y precio. ema 150
 
     Args:
         bt ([type]): [description]

@@ -1,4 +1,8 @@
+"""
+Este bot actualiza las bases de datos de las estrategias y envía una notificación ante señales de compra y venta.
 
+
+"""
 from sqlalchemy import create_engine
 import os
 from funciones.run_saveplot_strategy import run_saveplot_strategy
@@ -13,8 +17,9 @@ engine.execute("""CREATE TABLE crypto_strategy_results(market varchar, strategy_
 
 date_today = '2021-10-22'
 ticker = 'BTC-USD'
+periodo = 1
 #BOLLRSI
-run_saveplot_strategy(strategy= strategies.BOLLRSIStrat, ticker=ticker, strategy_name="BOLLRSI", date=date_today, engine=engine, file_name=f'images/BOLLRSI_BTCUSD.jpg')
+run_saveplot_strategy(strategy= strategies.BOLLRSIStrat, ticker=ticker, strategy_name="BOLLRSI", date=date_today, engine=engine, file_name=f'images/BOLLRSI_BTCUSD.jpg', periodo = periodo)
 
 #emacros100
 run_saveplot_strategy(strategy= strategies.emaPriceCross_100, ticker=ticker, strategy_name="EMACross100", date=date_today, engine=engine, file_name=f'images/EMACross100_BTCUSD.jpg')

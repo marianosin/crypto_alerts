@@ -1,3 +1,6 @@
+"""Descarga los datos con los que posteriormente se notificará al usuario.
+"""
+
 import ccxt
 import os 
 import pandas as pd
@@ -19,7 +22,7 @@ exchange = ccxt.binance()
 #         print(i)
 
 # Descarga pares de interes
-pairs = sqlio.read_sql('SELECT * FROM crypto_makets', conecta_db('tablero_acciones') )
+pairs = sqlio.read_sql('SELECT * FROM crypto_markets', conecta_db('tablero_acciones') )
 
 engine.execute('drop table crypto_prices;')
 for pair in pairs.market_pair:
@@ -28,11 +31,11 @@ for pair in pairs.market_pair:
 
 
     # Calcula los indicadores de interés
-    df = pd.DataFrame(ohlc_btcusdt, columns = ['date_c', 'open_c', 'high_c', 'low_c', 'close_c', 'volume_c'])
-    # df['Time'] = [datetime.fromtimestamp(float(time)/1000) for time in df['Time']]
-    df['date_c'] = [(float(time)/1) for time in df['date_c']]
-    df.set_index('date_c', inplace=True)
-    df['coin_pair'] = pair
+    df = pd.DataFrame(ohlc_btcusdt, columns = ['Time', 'open_c', 'high_c', 'low_c', 'close_c', 'volume_c'])
+    df['Time'] = [datetime.fromtimestamp(float(time)/1000) for time in df['Time']]
+    # df['date_c'] = [(float(time)/1) for time in df['date_c']]
+    df.set_index('Time', inplace=True)
+    df['coin_pair'] = pair.replace('/','-')
     ema10 = ta.ema(df["close_c"], length=10)
     df['ema_10'] = ema10
     ema10 = ta.ema(df["close_c"], length=10)
