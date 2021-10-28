@@ -31,10 +31,10 @@ for pair in pairs.market_pair:
 
 
     # Calcula los indicadores de interés
-    df = pd.DataFrame(ohlc_btcusdt, columns = ['Time', 'open_c', 'high_c', 'low_c', 'close_c', 'volume_c'])
-    df['Time'] = [datetime.fromtimestamp(float(time)/1000) for time in df['Time']]
+    df = pd.DataFrame(ohlc_btcusdt, columns = ['date', 'open_c', 'high_c', 'low_c', 'close_c', 'volume_c'])
+    df['date'] = [datetime.fromtimestamp(float(time)/1000) for time in df['date']]
     # df['date_c'] = [(float(time)/1) for time in df['date_c']]
-    df.set_index('Time', inplace=True)
+    df.set_index('date', inplace=True)
     df['coin_pair'] = pair.replace('/','-')
     ema10 = ta.ema(df["close_c"], length=10)
     df['ema_10'] = ema10
@@ -44,6 +44,8 @@ for pair in pairs.market_pair:
     df['ema_20'] = ema20
     ema50 = ta.ema(df["close_c"], length=50)
     df['ema_50'] = ema50
+    ema100 = ta.ema(df["close_c"], length=100)
+    df['ema_100'] = ema100
     ema200 = ta.ema(df["close_c"], length=200)
     df['ema_200'] = ema200
     rsi14 = ta.rsi(df["close_c"], length=14)
