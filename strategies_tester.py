@@ -8,7 +8,7 @@ Este bot actualiza las bases de datos de las estrategias y envía una notificaci
 from sqlalchemy import create_engine
 import os
 from funciones.run_saveplot_strategy import run_saveplot_strategy
-
+from datetime import datetime
 import strategies
 
 
@@ -21,7 +21,7 @@ engine.execute("DROP TABLE IF EXISTS crypto_strategy_results;")
 engine.execute("""CREATE TABLE crypto_strategy_results(market varchar, strategy_name varchar, anual_return numeric); """)
 
 #Parametros a dar en el test
-date_today = '2021-10-28'
+date_today = datetime.today().isoformat()[:10]
 ticker = 'BTC-USD'
 periodo = 1
 

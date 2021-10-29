@@ -1,3 +1,3 @@
-import pandas_ta
+from datetime import datetime
 
-help()
+print(type())

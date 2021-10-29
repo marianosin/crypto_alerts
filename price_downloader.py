@@ -9,7 +9,7 @@ from sqlalchemy import create_engine
 import pandas_ta as ta
 import pandas.io.sql as sqlio
 from funciones.conecta_db import conecta_db
-
+from datetime import datetime
 # Conecta a base de datos 
 engine = create_engine(f'postgresql://{os.environ.get("db_user")}:{os.environ.get("db_pass")}@{os.environ.get("db_host")}/tablero_acciones')
 

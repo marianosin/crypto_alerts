@@ -1,2 +1,0 @@
-export BINANCE_KEY="NKmchr7EnKxzKyDBx39sDrtiobTtky9ydowPyX3zojQotpisr6han3teMwKH44ET"
-export BINANCE_SECRET="7ixNPDtYoAvugGzIXsr1cu14qtH1clVnDEIyzQky6RF8Yfke7cD55Td3s3ENHGO2"
