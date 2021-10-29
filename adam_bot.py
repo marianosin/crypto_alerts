@@ -86,8 +86,9 @@ elif (last_rsi<=30):
     mensaje = {'username': 'Adam', 'content': msg}
 
     requests.post(os.environ.get('adam_ama100'), json= mensaje)  
-
-#requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_btc-usdt.png')
+msg = f"Se adjuntan los gráficos actualizados de precio, EMA y RSI. En la brevendad esto estará disponible"
+mensaje = {'username': 'Adam', 'content': msg}
+requests.post(os.environ.get("adam_ema100"), json= mensaje)
 plt.clf()
 plt.plot(df['date'], df['rsi_14'])
 #ajusta presencia

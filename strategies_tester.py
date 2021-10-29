@@ -10,7 +10,7 @@ import os
 from funciones.run_saveplot_strategy import run_saveplot_strategy
 from datetime import datetime
 import strategies
-
+import requests
 
 
 #Conección a base de datos
@@ -39,6 +39,7 @@ run_saveplot_strategy(strategy= strategies.emaPriceCross_150, ticker=ticker, str
 
 run_saveplot_strategy(strategy= strategies.emaPriceCross_200, ticker=ticker, strategy_name="EMACross200", date=date_today, engine=engine, file_name=f'images/EMACross200_BTCUSD.jpg')
 
-
-
+msg = f"Se actualizaron los datos de las estrategias."
+mensaje = {'username': 'Adam', 'content': msg}
+requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_rsi_btc-usdt.png')
 
