@@ -87,7 +87,7 @@ elif (last_rsi<=30):
 
     requests.post(os.environ.get('adam_ama100'), json= mensaje)  
 
-requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_btc-usdt.png')
+#requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_btc-usdt.png')
 plt.clf()
 plt.plot(df['date'], df['rsi_14'])
 #ajusta presencia
@@ -96,4 +96,4 @@ plt.xticks(rotation =90)
 plt.tight_layout()
 plt.savefig('images/adam_rsi_btc-usdt.png')
 
-requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_rsi_btc-usdt.png')
+#requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_rsi_btc-usdt.png')
