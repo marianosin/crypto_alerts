@@ -40,9 +40,60 @@ last_rsi = df_evaluation.iloc[0,3]
 #Falta crear las condiciones para evaluar y mandar el mensale
 
 
+#Señal de compra
+if (prev_price<prev_ema) and (last_price>last_ema):
+    msg = f"Señal: COMPRA \n Suceso: Cruce de precio a EMA de 100 \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
 
+    requests.post(os.environ.get('adam_ama100'), json= mensaje)
+#Señal de venta
+elif (prev_price>prev_ema) and (last_price<last_ema):
+    msg = f"Señal: VENTA \n Suceso: Cruce de precio a EMA de 100 \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
 
+    requests.post(os.environ.get('adam_ama100'), json= mensaje)
+#Señal de mantener largo
+elif (prev_price>prev_ema) and (last_price>last_ema):
+    msg = f"Señal: MANTENER LARGO \n Suceso: Precio por ENCIMA de EMA \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
 
+    requests.post(os.environ.get("adam_ema100"), json= mensaje)
+#Señal de mantener corto
+elif (prev_price<prev_ema) and (last_price<last_ema):
+    msg = f"Señal: MANTENER CORTO \n Suceso: Precio por DEBAJO de EMA \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
 
-#requests.post(os.environ.get("adam_ema100"), json= mensaje)
+    requests.post(os.environ.get('adam_ama100'), json= mensaje)
+#Próximo a sobre compra
+if (65<last_rsi<70):
+    msg = f"Señal: Preparar VENTA \n Suceso: RSI próximo a SOBRE COMPRA \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
 
+    requests.post(os.environ.get('adam_ama100'), json= mensaje)
+elif (70<=last_rsi):
+    msg = f"Señal: PRECIO EN ZONA DE SOBRE COMPRA \n Suceso: RSI EN SOBRE COMPRA \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
+
+    requests.post(os.environ.get('adam_ama100'), json= mensaje)    
+#Proximo a sobre venta
+elif (30<last_rsi<35):
+    msg = f"Señal: Preparar COMPRA \n Suceso: RSI próximo a SOBRE VENTA \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
+
+    requests.post(os.environ.get('adam_ama100'), json= mensaje)
+elif (last_rsi<=30):
+    msg = f"Señal: PRECIO EN ZONA DE SOBRE VENTA \n Suceso: RSI EN SOBRE VENTA \n Último precio de cierre: {last_price} \n RSI {last_rsi} "
+    mensaje = {'username': 'Adam', 'content': msg}
+
+    requests.post(os.environ.get('adam_ama100'), json= mensaje)  
+
+requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_btc-usdt.png')
+plt.clf()
+plt.plot(df['date'], df['rsi_14'])
+#ajusta presencia
+plt.title("RSI de BTC-USDT")
+plt.xticks(rotation =90)
+plt.tight_layout()
+plt.savefig('images/adam_rsi_btc-usdt.png')
+
+requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_rsi_btc-usdt.png')
