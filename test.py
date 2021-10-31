@@ -1,3 +1,4 @@
-from datetime import datetime
+import os 
+user = os.environ.get("db_user")
 
-print(type())
+print(type(user))

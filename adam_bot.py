@@ -5,7 +5,10 @@ import matplotlib.pyplot as plt
 import os
 from sqlalchemy import create_engine
 #Conección a la base de datos
-engine = create_engine(f'postgresql://{os.environ.get("db_user")}:{os.environ.get("db_pass")}@{os.environ.get("db_host")}/tablero_acciones')
+user = os.environ.get("db_user")
+password = os.environ.get("db_pass")
+host = os.environ.get("db_host")
+engine = create_engine(f'postgresql://{user}:{password}@{host}/tablero_acciones')
 
 
 #Sistema de notificaciones
@@ -86,7 +89,7 @@ elif (last_rsi<=30):
     mensaje = {'username': 'Adam', 'content': msg}
 
     requests.post(os.environ.get('adam_ama100'), json= mensaje)  
-msg = f"Se adjuntan los gráficos actualizados de precio, EMA y RSI. En la brevendad esto estará disponible"
+msg = f"Se adjuntan los gráficos actualizados de precio, EMA y RSI."
 mensaje = {'username': 'Adam', 'content': msg}
 requests.post(os.environ.get("adam_ema100"), json= mensaje)
 plt.clf()
@@ -94,7 +97,12 @@ plt.plot(df['date'], df['rsi_14'])
 #ajusta presencia
 plt.title("RSI de BTC-USDT")
 plt.xticks(rotation =90)
+plt.axhline(70, color = 'red')
+plt.axhline(65, color = 'red')
+plt.axhline(35, color = 'green')
+plt.axhline(30, color = 'green')
 plt.tight_layout()
 plt.savefig('images/adam_rsi_btc-usdt.png')
 
-#requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_rsi_btc-usdt.png')
+requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open('images/adam_btc-usdt.png','rb')} )
+requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open('images/adam_rsi_btc-usdt.png','rb')} )

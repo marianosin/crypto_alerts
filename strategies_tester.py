@@ -41,5 +41,5 @@ run_saveplot_strategy(strategy= strategies.emaPriceCross_200, ticker=ticker, str
 
 msg = f"Se actualizaron los datos de las estrategias. También se actualizó la base de datos de Crypto"
 mensaje = {'username': 'Adam', 'content': msg}
-requests.post(os.environ.get("adam_ema100"), json= mensaje, files= 'images/adam_rsi_btc-usdt.png')
+requests.post(os.environ.get("adam_ema100"), json= mensaje)
 

@@ -11,7 +11,10 @@ import pandas.io.sql as sqlio
 from funciones.conecta_db import conecta_db
 from datetime import datetime
 # Conecta a base de datos 
-engine = create_engine(f'postgresql://{os.environ.get("db_user")}:{os.environ.get("db_pass")}@{os.environ.get("db_host")}/tablero_acciones')
+user = os.environ.get("db_user")
+password = os.environ.get("db_pass")
+host = os.environ.get("db_host")
+engine = create_engine(f'postgresql://{user}:{password}@{host}/tablero_acciones')
 
 # Conecta proveedor de datos
 exchange = ccxt.binance()
