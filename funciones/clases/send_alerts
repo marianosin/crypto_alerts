@@ -23,7 +23,7 @@ class alerts():
         
         self.crypto = crypto_pair
         self.ema = ema
-    def send_alert(self):
+    def send_alert_EMAPrice(self):
         """Envía notificaciones para el activo elegido y la ema elegida
         """
         pair = self.crypto
@@ -117,8 +117,3 @@ class alerts():
         requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open('images/adam_{self.crypto}.png','rb')} )
         requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open('images/adam_rsi_{self.crypto}.png','rb')} )
 
-
-adam = alerts('BTC-USDT', 'ema_100')
-
-
-adam.send_alert()
