@@ -23,20 +23,21 @@ class alerts():
         
         self.crypto = crypto_pair
         self.ema = ema
-    def send_alert_EMAPrice(self):
+    def send_alert_emaPriceCross(self):
         """Envía notificaciones para el activo elegido y la ema elegida
         """
         pair = self.crypto
     # Descarga la base a python para chequear si hay una señal de compra 
         df = sqlio.read_sql_query(f"SELECT date, close_c, {self.ema}, rsi_14 from crypto_prices where coin_pair = '{pair}'", engine)
     #Grafica precio y ema 100
+        plt.clf()
         plt.plot(df['date'], df['close_c'])
         plt.plot(df['date'], df[self.ema])
     #ajusta presencia
         plt.title(f"Precio de {self.crypto} vs EMA seleccionada")
         plt.xticks(rotation =90)
         plt.tight_layout()
-        plt.savefig('images/adam_{self.crypto}.png')
+        plt.savefig(f'images/adam_{self.crypto}.png')
 
         df_evaluation = df.tail(2)
 
@@ -51,7 +52,10 @@ class alerts():
         last_rsi = df_evaluation.iloc[0,3]
 
     #Falta crear las condiciones para evaluar y mandar el mensale
+        msg = f"Activo: {self.crypto} \n Estrategia: {self.ema} "
+        mensaje = {'username': 'Adam', 'content': msg}
 
+        requests.post(os.environ.get('adam_ema100'), json= mensaje)
 
 #Señal de compra
         if (prev_price<prev_ema) and (last_price>last_ema):
@@ -105,15 +109,14 @@ class alerts():
         plt.clf()
         plt.plot(df['date'], df['rsi_14'])
         #ajusta presencia
-        plt.title("RSI de BTC-USDT")
+        plt.title(f"RSI de {self.crypto} ")
         plt.xticks(rotation =90)
         plt.axhline(70, color = 'red')
         plt.axhline(65, color = 'red')
         plt.axhline(35, color = 'green')
         plt.axhline(30, color = 'green')
         plt.tight_layout()
-        plt.savefig('images/adam_rsi_{self.crypto}.png')
+        plt.savefig(f'images/adam_rsi_{self.crypto}.png')
 
-        requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open('images/adam_{self.crypto}.png','rb')} )
-        requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open('images/adam_rsi_{self.crypto}.png','rb')} )
-
+        requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open(f'images/adam_{self.crypto}.png','rb')} )
+        requests.post(os.environ.get("adam_ema100"), json= mensaje, files= {'upload_file': open(f'images/adam_rsi_{self.crypto}.png','rb')} )

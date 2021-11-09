@@ -26,8 +26,10 @@ exchange = ccxt.binance()
 
 # Descarga pares de interes
 pairs = sqlio.read_sql('SELECT * FROM crypto_markets', conecta_db('tablero_acciones') )
-
-engine.execute('drop table crypto_prices;')
+try:
+    engine.execute('drop table crypto_prices;')
+except:
+    pass
 for pair in pairs.market_pair:
 
     ohlc_btcusdt = exchange.fetch_ohlcv(pair, timeframe='1d')
